@@ -1,0 +1,73 @@
+﻿@model OGL.Models.MyAd
+@using Microsoft.AspNet.Identity;
+
+@{
+    ViewBag.Tytul = "Szczegóły ogloszenia nr" + Model.Id;
+    ViewBag.Opis = "Szczegóły ogloszenia nr" + Model.Id + "Opis do Google";
+    ViewBag.SlowaKluczowe = "MyAd, " + Model.Id + " , szczegóły";
+}
+
+<h2>Szczegóły ogłoszenia nr @Model.Id</h2>
+
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+Id autora:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UzytkownikId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tresc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tresc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tytul)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tytul)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataDodania)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataDodania)
+        </dd>
+
+        @*<dt>
+            @Html.DisplayNameFor(model => model.OstatnioEdytowane)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OstatnioEdytowane)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdOstatnioEdytowane)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdOstatnioEdytowane)
+        </dd>*@
+
+    </dl>
+</div>
+<p>
+    @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Pracownik") || Model.UzytkownikId == User.Identity.GetUserId()))
+    {
+        @Html.ActionLink("Edytuj", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+        @: |
+    }
+    @Html.ActionLink("Wróć", "Index", null, new { @class = "btn btn-warning" })
+</p>

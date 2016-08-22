@@ -1,0 +1,18 @@
+﻿@model OGL.Models.IndexViewModel
+@{
+    ViewBag.Title = "Zarządzanie";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>Zmień swoje ustawienia</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Hasło:</dt>
+        <dd>
+            @(Model.HasPassword ? Html.ActionLink("Zmień je tutaj", "ChangePassword") : Html.ActionLink("Create", "SetPassword"))
+        </dd>   
+    </dl>
+</div>

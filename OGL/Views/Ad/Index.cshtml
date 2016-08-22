@@ -1,0 +1,78 @@
+﻿@model PagedList.IPagedList<OGL.Models.MyAd>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Tytul = "Lista ogłoszeń -metatytul do 60 znakow";
+    ViewBag.Opis = "lista ogloszeń z naszej aplikacji- metaopis do 160 znaków";
+    ViewBag.SlowaKluczowe = "Lista, ogloszeń,słowa, kluczowe, aplikacja";
+}
+
+<h2>Lista ogłoszeń</h2>
+@if (User.Identity.IsAuthenticated) { 
+<p>
+    @Html.ActionLink("Dodaj ogłoszenie", "Create",null, new { @class="btn btn-primary"})
+</p>}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model[0].UzytkownikId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model=> model[0].Tresc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Tytul)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].DataDodania)
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UzytkownikId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tresc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tytul)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataDodania)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OstatnioEdytowane)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdOstatnioEdytowane)
+        </td>
+        <td>
+            @Html.ActionLink("Szczegóły", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })
+            @if(User.Identity.IsAuthenticated && (User.IsInRole("Admin")|| User.IsInRole("Pracownik")))
+
+            {
+                <br/>
+                @Html.ActionLink("Edytuj", "Edit", new { id = item.Id }, new { @class = "btn btn-warning" })
+                if (User.IsInRole("Admin"))
+                {
+                    <br/>
+                    @Html.ActionLink("Usuń", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                }
+            }
+       
+           
+        </td>
+    </tr>
+}
+
+</table>
+<div >
+    <br/>
+    Strona@(Model.PageCount<Model.PageNumber?0: Model.PageNumber)z @Model.PageCount
+    @Html.PagedListPager(Model,page=>Url.Action("Index",new { page}))
+</div>

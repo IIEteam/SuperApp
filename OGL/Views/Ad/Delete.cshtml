@@ -1,0 +1,89 @@
+﻿@model OGL.Models.MyAd
+
+@{
+    ViewBag.Tytul = "Usuń ogloszenie nr" + Model.Id;
+    ViewBag.Opis = "Usuń ogloszenie nr" + Model.Id + "Opis do Google";
+    ViewBag.SlowaKluczowe = "MyAd, " + Model.Id + " , usuń";
+}
+
+
+<h2>Usuń ogloszenie nr @Model.Id</h2>
+@if (ViewBag.Blad == true)
+{
+    <div class="alert alert-danger" role="alert">
+        Wystąpił błąd podczas usuwania<br />
+        Spróbuj ponownie.
+
+    </div>
+}
+<h3>Czy napewno chcesz usunąć?</h3>
+<div>
+    <h4>MyAd</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+           Id Autora:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UzytkownikId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tresc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tresc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tytul)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tytul)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataDodania)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataDodania)
+        </dd>
+
+        @*<dt>
+            @Html.DisplayNameFor(model => model.OstatnioEdytowane)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OstatnioEdytowane)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdOstatnioEdytowane)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdOstatnioEdytowane)
+        </dd>*@
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Usuń" class="btn btn-danger confirmation" /> |
+            @Html.ActionLink("Wróć", "Index", null, new { @class="btn btn-primary"})
+        </div>
+    }
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        $('.confirmation').on('click', function () {
+            return confirm('Czy na pewno chcesz usunąć?')
+        })
+    </script>
+    }
